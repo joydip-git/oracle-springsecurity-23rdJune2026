@@ -1,0 +1,31 @@
+Open Web Application Security Project (OWASP)
+
+spring security:
+--------------------------
+module in a spring ecosystem which takes care of the security aspect of your application
+
+security:
+-------------
+authentication and authorization features
+
+1. provides secure authentication and authorization for users
+2. Supports form login, JWT, OAuth2, LDAP and OAuth2 with Keycloak
+3. protects your app against CSRF, CORS, and session attacks
+
+package: spring security package
+
+spring security offered by default a form login -> customize this login page
+generated a default password for dev mode -> I want to create my own password
+redirected me to the requested resource after successful login
+it also helped me to logout (http://localhost:8000/logout)
+
+security filter chain:
+-----------------------------
+sequence of filters (middleware)  which are applied on every HTTP request coming to the app
+each filter in the chain is responsible for specific task
+	- user is authenticated or not
+	- user has permission to access the resource (enforce access control)
+	- 
+
+
+<input name="_csrf" type="hidden" value="mL6xUgGpdRs3HYvCetmk-JbF5EymYkQi3PH4du1_9iCs10V7q4eDZjHKRyMaL7LyTfSQza_wyS2TW3UP6sXLQo5HwRTKtnId" />
