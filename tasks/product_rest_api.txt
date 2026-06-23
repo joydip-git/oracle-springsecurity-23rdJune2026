@@ -1,0 +1,12 @@
+create a RESTful API application for product management system containing all APIs for CRUD operations against a database table
+
+1. create a database table "products"
+products table schema
+	- id, name, price, desc
+
+2. use Spring Data JPA to work with the database
+	- repo
+	- service
+
+3. controller:
+	CRUD operations against products

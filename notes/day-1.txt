@@ -28,4 +28,20 @@ each filter in the chain is responsible for specific task
 	- 
 
 
-<input name="_csrf" type="hidden" value="mL6xUgGpdRs3HYvCetmk-JbF5EymYkQi3PH4du1_9iCs10V7q4eDZjHKRyMaL7LyTfSQza_wyS2TW3UP6sXLQo5HwRTKtnId" />
+<input name="_csrf" type="hidden" value="LtmK2HnEEzReZWY_NFSgWOhVjnBdOSVCxp94KPkpjCFhc6kTGum46U6ncVFzVgAKV3mUbdpho0lrCRBv_69MHMEd6hRVQc9y" />
+
+449CB9FA6EFFD9DA55AE5EB260A2D604
+
+
+// Allows restricting access based upon the HttpServletRequest using RequestMatcher implementations (i.e. via URL patterns).
+
+//AuthorizationManagerRequestMatcherRegistry req
+//http.authorizeHttpRequests(req -> req.requestMatchers("/*").authenticated());
+		//CsrfConfigurer<HttpSecurity>
+
+		return http
+			.csrf((customizer) -> customizer.disable())
+			.authorizeHttpRequests((req) -> req.anyRequest().authenticated())
+			.formLogin(Customizer.withDefaults())
+			.httpBasic(Customizer.withDefaults())
+			.build();

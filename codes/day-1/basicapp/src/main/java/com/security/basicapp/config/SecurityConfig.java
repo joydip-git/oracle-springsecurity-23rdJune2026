@@ -1,61 +1,53 @@
 package com.security.basicapp.config;
 
-import com.security.basicapp.controller.HelloController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.User.UserBuilder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer.AuthorizationManagerRequestMatcherRegistry;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final HelloController helloController;
-
-    SecurityConfig(HelloController helloController) {
-        this.helloController = helloController;
-    }
-
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-		// Allows restricting access based upon the HttpServletRequest using
-		// RequestMatcher implementations (i.e. via URL patterns).
-		//AuthorizationManagerRequestMatcherRegistry req
-		//http.authorizeHttpRequests(req -> req.requestMatchers("/*").authenticated());
-		//CsrfConfigurer<HttpSecurity>
-		return http
-			.csrf((CsrfConfigurer<HttpSecurity> customizer) -> customizer.disable())
-			.authorizeHttpRequests((req) -> req.anyRequest().authenticated())
-			.formLogin(Customizer.withDefaults())
-			.httpBasic(Customizer.withDefaults())
-			.build();
+		return http.csrf((customizer) -> customizer.disable())
+				.authorizeHttpRequests((req) -> req.anyRequest().authenticated())
+				.formLogin(Customizer.withDefaults())
+				.httpBasic(Customizer.withDefaults())
+				.build();
 	}
 	
-//	@Bean
-//	public AuthenticationManager authenticationManager() {
-//		
-//	}
-//	
-//	@Bean
-//	public UserDetailsService useDetailsService() {}
-//	
-//	@Bean
-//	public PasswordEncoder passwordEncoder() {
-//		
-//	}
-//	
-//	@Bean
-//	public AuthenticationProvider authenticationProvider() {
-//		return new DaoAuthenticationProvider();
-//	}
+	@Bean
+	UserDetailsService useDetailsService(PasswordEncoder encoder) {
+		UserBuilder userBuilder = User.builder();
+		userBuilder.username("joy");
+		userBuilder.password(encoder.encode("j@123"));
+		userBuilder.roles("USER");
+		
+		UserDetails user1 = userBuilder.build();
+		UserDetails user2 = User
+				.builder()
+				.username("anil")
+				.password(encoder.encode("a@123"))
+				.roles("ADMIN")
+				.build();
+		
+		return new InMemoryUserDetailsManager(user1, user2);
+	}
+	
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 }
