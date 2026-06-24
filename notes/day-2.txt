@@ -101,13 +101,50 @@ compact() => Actually builds the JWT and serializes it to a compact, URL-safe st
 OncePerRequestFilter:
 Filter base class that aims to guarantee a single execution per request dispatch, on any servlet container. It provides a doFilterInternal method with HttpServletRequest and HttpServletResponse arguments.
 
+WebAuthenticationDetailsSource:
+it builds the details object from an HttpServletRequest object, creating a WebAuthenticationDetails .
+
+WebAuthenticationDetails:
+A holder of selected HTTP details related to a web authentication request.
 
 
-anil
-eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmlsIiwiaWF0IjoxNzgyMjk1MjE4LCJleHAiOjE3ODIzMDA0MDJ9.OSTtR9jT9rRxrf0ABoxEeAeOUWI3-3BUmgf7ZnP9RNU
+FilterChain:
+---------------
+A FilterChain is an object provided by the servlet container to the developer giving a view into the invocation chain of a filtered request for a resource. Filters use the FilterChain to invoke the next filter in the chain, or if the calling filter is the last filter in the chain, to invoke the resource at the end of the chain.
 
-joydip
-eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb3lkaXAiLCJpYXQiOjE3ODIyOTU0MTMsImV4cCI6MTc4MjMwMDU5N30.95vwh9vogD3qHYyxpdnk8sC0puTBfndOmTVHYp0m27g
+Security filter chain: [
+  DisableEncodeUrlFilter
+  WebAsyncManagerIntegrationFilter
+  SecurityContextHolderFilter
+  HeaderWriterFilter
+  LogoutFilter
+  JwtAuthenticationFilter
+  BasicAuthenticationFilter
+  RequestCacheAwareFilter
+  SecurityContextHolderAwareRequestFilter
+  AnonymousAuthenticationFilter
+  SessionManagementFilter
+  ExceptionTranslationFilter
+  AuthorizationFilter
+]
+
+Security filter chain: [
+  DisableEncodeUrlFilter
+  WebAsyncManagerIntegrationFilter
+  SecurityContextHolderFilter
+  HeaderWriterFilter
+  LogoutFilter
+  JwtAuthenticationFilter
+  BasicAuthenticationFilter
+  RequestCacheAwareFilter
+  SecurityContextHolderAwareRequestFilter
+  AnonymousAuthenticationFilter
+  SessionManagementFilter
+  ExceptionTranslationFilter
+  AuthorizationFilter
+]
+
+
 
 
 

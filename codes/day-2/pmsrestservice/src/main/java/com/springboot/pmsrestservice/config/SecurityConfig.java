@@ -21,7 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.springboot.pmsrestservice.filters.JwtAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 public class SecurityConfig {
 
 	@Autowired
@@ -37,7 +37,8 @@ public class SecurityConfig {
 				.authorizeHttpRequests((req) -> 
 				req
 				.requestMatchers("/api/auth/**").permitAll()
-				.requestMatchers("/api/products/**").authenticated())
+				.requestMatchers("/api/products/**")
+				.authenticated())
 				.httpBasic(Customizer.withDefaults())
 				.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
