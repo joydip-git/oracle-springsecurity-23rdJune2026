@@ -23,7 +23,7 @@ public class AuthController {
 	}
 	
 	@PostMapping("/login")
-	public AppUserResponse login(@RequestBody AppUserRequest user) {
-		return new AppUserResponse(Long.getLong("1"),"joy","joy123");
+	public String login(@RequestBody AppUserRequest user) {
+		return authService.verify(user);
 	}
 }

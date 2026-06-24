@@ -87,7 +87,27 @@ Another benefit of DelegatingFilterProxy is that it allows delaying looking up F
 
 JWT: JSON Web Token
 
+Authentication:
+-----------------
+Represents the token for an authentication request or for an authenticated principal once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
 
+UsernamePasswordAuthenticationToken:
+----------------------------------------
+implementation of Authentication that is designed for simple presentation of a username and password.
+
+
+compact() => Actually builds the JWT and serializes it to a compact, URL-safe string according to the JWT Compact Serialization rules.
+
+OncePerRequestFilter:
+Filter base class that aims to guarantee a single execution per request dispatch, on any servlet container. It provides a doFilterInternal method with HttpServletRequest and HttpServletResponse arguments.
+
+
+
+anil
+eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmlsIiwiaWF0IjoxNzgyMjk1MjE4LCJleHAiOjE3ODIzMDA0MDJ9.OSTtR9jT9rRxrf0ABoxEeAeOUWI3-3BUmgf7ZnP9RNU
+
+joydip
+eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb3lkaXAiLCJpYXQiOjE3ODIyOTU0MTMsImV4cCI6MTc4MjMwMDU5N30.95vwh9vogD3qHYyxpdnk8sC0puTBfndOmTVHYp0m27g
 
 
 
