@@ -1,0 +1,96 @@
+database -> UserDetailsService -> loadByUsername(username) -> UserDetails -> AuthenticationProvider -> AuthenticationManager (.authenticate()) -> SecurityFilterChain
+
+
+Spring Security Filters:
+-------------------------
+Authentication
+	UsernamePasswordAuthenticationFilter: extract user name and password from HTTP request and prepare Authentication type object
+	
+AuthenticationManager
+	as soon as a request for authentication is received from a filter. this AM delegates the job of validation of user details to AuthenticationProvider
+	it is the responsibility of the Auth manager to decide/manage which Auth provider will be used
+
+AuthenticationProvider:
+	it contains the core logic of how to validate the user details
+
+UserDetailsManager/UserDetailsService:
+	it helps you to retrieve, create, update or delete the user details from the DB/ storage system
+
+PasswordEncoder:
+	job is to encode and hash password
+
+SecurityContext
+	once the request has been authenticated, the authenticated "Authentication" type object will be stored in the thread-local SecurityContext type object. this object is managed by SecurityContextHolder. 
+this helps during the upcoming request from the same user
+
+1. UsernamePasswordAuthenticationFilter
+2. BasicAuthenticationFilter
+3. BearerTokenAuthenticationFilter
+4. OAuth2LoginAuthenticationFilter
+
+5. RememberMeAuthenticationFilter
+6. X509AuthenticationFilter
+
+7. LogoutFilter
+8. DefaultLoginPageGeneratingFilter / DefaultLogoutPageGeneratingFilter
+9. RequestCacheAwareFilter
+10. SecurityContextHolderAwareRequestFilter
+11. AnonymousAuthenticationFilter
+
+base: AuthenticationFilter (AbstractAuthenticationProcessingFilter)
+
+interface Authentication {}
+class UsernamePasswordAuthenticationToken implements Authentication{}
+
+SessionManagementFilter
+ExceptionTranslationFilter
+AuthorizationFilter
+
+
+DisableEncodeUrlFilter
+ChannelProcessingFilter
+WebAsyncManagerIntegrationFilter
+
+SecurityContextHolderFilter: Establishes the SecurityContext by loading user authentication from the repository (replaces the legacy SecurityContextPersistenceFilter).
+
+HeaderWriterFilter
+
+CorsFilter
+CsrfFilter
+
+class CustomFilter extends OncePerRequestFilter{
+@Override
+public void doFilter(HttpServletRequest request, HttpServletResponse response,
+		FilterChain chain) throws IOException, ServletException {
+
+	//when the request arrives from the client
+	// do something before the rest of the application
+
+	chain.doFilter(request, response); // invoke the rest of the application
+
+	//when the response returns to the client
+	// do something after the rest of the application
+}
+}
+
+new Filter1().doFilter(HttpServletRequest,HttpServlteResponse,FilterChain)
+new Filter2().doFilter(...)
+
+DelegatingFilterProxy Pseudo Code
+public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	Filter delegate = getFilterBean(someBeanName); 
+	delegate.doFilter(request, response, chain); 
+}
+
+Another benefit of DelegatingFilterProxy is that it allows delaying looking up Filter bean instances. This is important because the container needs to register the Filter instances before the container can start up. However, Spring typically uses a ContextLoaderListener to load the Spring Beans, which is not done until after the Filter instances need to be registered
+
+
+JWT: JSON Web Token
+
+
+
+
+
+
+
+	
