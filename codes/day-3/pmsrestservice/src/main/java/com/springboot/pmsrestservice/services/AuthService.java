@@ -34,11 +34,12 @@ public class AuthService {
 		AppUser entity = new AppUser();
 		entity.setUsername(user.username());
 		entity.setPassword(encoder.encode(user.password()));
+		entity.setRole(user.role());
 		return entity;
 	}
 
 	private AppUserResponse toResponse(AppUser user) {
-		return new AppUserResponse(user.getId(), user.getUsername(), user.getPassword());
+		return new AppUserResponse(user.getId(), user.getUsername(), user.getPassword(), user.getRole());
 	}
 
 	public AppUserResponse createUser(AppUserRequest request) {

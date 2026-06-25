@@ -1,0 +1,54 @@
+Role based access (JWT authentication)
+
+SSO -> Single Sign On
+
+Access Token => Jwt Token => auth server
+resource server to access resource use that access token
+
+protocol: OAuth2 -> implement SSO
+
+Resource
+Resource Owner
+Resource Server
+Client - public and confidential
+Grant Type
+
+Authorization server - which generates and provides the access token to clients
+
+layer at the top of OAuth -> identity layer -> token with user info (Id token)
+
+client < - access token: used to verify whether the user is authorized to access the resource + id token: very user info and identify the user
+
+Open ID Connect (OIDC) -> at the top of OAuth2
+
+
+User: a person who is using a registered client to access a resource
+
+Relying party (RP):an app/website that outsources its user authentication function to an IDP (Identity provider)
+
+User Agent: a piece of s/w that requests the tokens either for authenticating an user or for accessing a resource
+
+Open ID Provider (OP) or IDP (Identity provider): another entity that has implemented the Open ID Connect and OAuth2 protocols
+
+Authentication: the secure process to establish and communicate between the person/user operating an app or browser is who they claim to be
+
+1. End user navigates to a website or web app via a browser
+2. end user clicks sign-in and enters the username and password
+3. the client (RP) sends a request to IDP or OP [client must be registered with OP/IDP]
+4. the IDP/OP authenticates the user and obtains authorization
+5. The OP/IDP responds with and identity token and an access token
+6. the RP can send a request with the access token to the user device
+7. the "UserInfo" endpoint returns claims about an end user
+
+
+Consider defining a bean of type 'org.springframework.security.oauth2.client.registration.ClientRegistrationRepository' in your configuration.
+
+
+
+
+
+
+
+
+
+

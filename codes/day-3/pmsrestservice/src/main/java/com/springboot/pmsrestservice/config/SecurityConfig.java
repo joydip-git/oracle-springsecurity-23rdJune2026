@@ -3,6 +3,7 @@ package com.springboot.pmsrestservice.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -26,23 +27,36 @@ public class SecurityConfig {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
-	
+
 	@Autowired
 	private JwtAuthenticationFilter jwtAuthFilter;
 
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
+//		return http.csrf((customizer) -> customizer.disable())
+//				.authorizeHttpRequests((req) -> 
+//				req
+//				.requestMatchers("/api/auth/**").permitAll()
+//				.requestMatchers("/api/products/**")
+//				.authenticated())
+//				.httpBasic(Customizer.withDefaults())
+//				.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+//				.build();
+
 		return http.csrf((customizer) -> customizer.disable())
-				.authorizeHttpRequests((req) -> 
-				req
-				.requestMatchers("/api/auth/**").permitAll()
-				.requestMatchers("/api/products/**")
-				.authenticated())
+				.authorizeHttpRequests((req) -> req
+						.requestMatchers("/api/auth/**")
+						.permitAll()
+						.requestMatchers(HttpMethod.GET, "/api/products/**").hasAnyRole("USER", "ADMIN")
+						.requestMatchers(HttpMethod.PUT, "/api/products/**").hasRole("ADMIN")
+						.requestMatchers(HttpMethod.POST, "/api/products/**").hasRole("ADMIN")
+						.requestMatchers(HttpMethod.DELETE, "/api/products/**").hasRole("ADMIN").anyRequest()
+						.authenticated())
 				.httpBasic(Customizer.withDefaults())
 				.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-				.build();
+				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class).build();
 	}
 
 	// An AuthenticationProvider implementation that retrieves user details from a
@@ -54,12 +68,12 @@ public class SecurityConfig {
 		provider.setPasswordEncoder(encoder);
 		return provider;
 	}
-	
+
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder(12);
 	}
-	
+
 	@Bean
 	AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
 		return configuration.getAuthenticationManager();
