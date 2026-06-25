@@ -10,3 +10,26 @@ products table schema
 
 3. controller:
 	CRUD operations against products
+
+enhance the app with Role based access in JWT Authentication
+1. change the AppUser entity and uncomment the role property in it
+2. either drop the old table so that new table can be created with role column
+or create a new table by mapping the entity, so that new table can be created with role column. role column data type can be 'Role'. possible values USER or ADMIN
+
+**Note: when this role is generally saved for an user it should be saved like ROLE_USER and ROLE_ADMIN
+
+3. register 1/2 users with '/register' API with username, password and role (USER or ADMIN)
+
+4. change the code in AppUsersDetailsService:
+		UserDetails user = User
+				.builder()
+				.username(found.getUsername())
+				.password(found.getPassword())
+				//.roles(found.getRole()) -> uncomment
+				.build(); 
+
+in the SecurityContext the authenticated Authentication object will be saved and there the principal as well as the authorities also will be saved, which can be used for role based Jwt Auth to grant access to APIs
+
+update your code with that facility so that following requirements are satisfied:
+	1. ADMIN role has access to all product APIs
+	2. USER role has access to ONLY GET APIs.
