@@ -40,10 +40,14 @@ Authentication: the secure process to establish and communicate between the pers
 6. the RP can send a request with the access token to the user device
 7. the "UserInfo" endpoint returns claims about an end user
 
+command to run keycloak:
+keycloak dir>bin/kc.sh start-dev --http-port=8090
 
-Consider defining a bean of type 'org.springframework.security.oauth2.client.registration.ClientRegistrationRepository' in your configuration.
+keycloak dir>bin/kc.bat start-dev --http-port=8090
 
 
+http://localhost:8180/login/oauth2/code/oauth2-demo-client
+http://localhost:8180/login/oauth2/authorization/oauth2-demo-client
 
 
 

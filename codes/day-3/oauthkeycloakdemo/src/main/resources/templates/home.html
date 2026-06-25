@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale:1.0">
+	<title>Home</title>
+</head>
+
+<body>
+	<h2>Welcome to OAuth2 with Keycloak</h2>
+	<table>
+		<tr>
+			<td>UserName:</td>
+			<td><span th:text="${username}"></span></td>
+		</tr>
+		<tr>
+			<td>Email:</td>
+			<td><span th:text="${email}"></span></td>
+		</tr>
+		<tr>
+			<td>Name:</td>
+			<td><span th:text="${name}"></span></td>
+		</tr>
+		<tr>
+			<td>Roles:</td>
+			<td><span th:text="${roles}"></span></td>
+		</tr>
+		<form th:action="@{/logout}" method="post">
+			<button type="submit">Logout</button>
+		</form>
+		<br />
+		<ul>
+			<li sec:authorize="hasRole('USER')"> <a th:href="@{/user}">User Dashboard</a></li>
+			<li sec:authorize="hasRole('MANAGER')"> <a th:href="@{/manager}">Manager Dashboard</a></li>
+			<li sec:authorize="hasRole('ADMIN')"> <a th:href="@{/admin}">Admin Dashboard</a></li>
+		</ul>
+
+	</table>
+</body>
+
+</html>

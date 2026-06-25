@@ -145,6 +145,14 @@ Security filter chain: [
 ]
 
 
+The property prefix spring.security.oauth2.client.provider is used in Spring Boot application configuration files to define the OAuth 2.0 or OpenID Connect (OIDC) Identity Provider's endpoints and technical metadata.By defining a provider under this block, your application learns where to redirect users for login, where to exchange authorization codes for access tokens, and where to fetch user profile data
+
+
+The property spring.security.oauth2.client.registration is the base configuration prefix used in Spring Boot applications to register OAuth 2.0 or OpenID Connect (OIDC) client credentials. This configuration maps directly to the underlying ClientRegistration class in Spring Security. It permits an application to communicate with external identity providers such as Google, GitHub, Okta, or custom internal authorization servers
+
+spring.security.oauth2.client.provider.oauth2-demo-client.user-name-attribute=preferred_username
+This configuration property tells Spring Security which key (claim) in the UserInfo response or ID Token should be mapped as the unique username for the authenticated user. By setting this to "preferred_username", you are instructing Spring Security to extract that specific attribute and use it when you call Principal.getName() or SecurityContextHolder.getContext().getAuthentication().getName() in your Java application
+
 
 
 
